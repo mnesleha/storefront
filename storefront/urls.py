@@ -26,5 +26,6 @@ admin.site.index_title = "Welcome to Storefront Admin Portal"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('playground/', include('playground.urls')),
+    path('store/', include('store.urls')),
     #    path('__debug__/', include('debug_toolbar.urls'))
 ] + debug_toolbar_urls()
