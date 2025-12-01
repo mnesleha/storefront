@@ -73,16 +73,22 @@ class CollectionAdmin(admin.ModelAdmin):
 
 @admin.register(models.Customer)
 class CustomerAdmin(admin.ModelAdmin):
+    list_select_related = ['user']
     list_display = ['full_name',
-                    'email', 'orders_count', 'membership']
+                    'user__email', 'orders_count', 'membership']
     list_editable = ['membership']
-    search_fields = ['first_name', 'last_name', 'email']
+    search_fields = ['user__first_name', 'user__last_name', 'user__email']
+    ordering = ['user__first_name', 'user__last_name']
     list_filter = ['membership']
     list_per_page = 10
 
-    @admin.display(ordering='full_name')
+    @admin.display(ordering='user__last_name')
     def full_name(self, customer):
-        return f"{customer.last_name} {customer.first_name}"
+        return f"{customer.user.last_name} {customer.user.first_name}"
+
+    @admin.display(ordering='user__email')
+    def user_email(self, customer):
+        return customer.user.email
 
     @admin.display(ordering='orders_count')
     def orders_count(self, customer):
