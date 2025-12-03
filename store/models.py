@@ -80,6 +80,8 @@ class Customer(models.Model):
 
     class Meta:
         ordering = ['user__last_name', 'user__first_name']
+        permissions = [
+            ('view_history', 'Can view customer history'),]
 
 
 class Order(models.Model):
